@@ -30,7 +30,7 @@ RUN rm start.sh \
 
 # Build Image
 # ===================================
-FROM php-apache:1.0.1-notz
+FROM dennbagas/docker-php-apache:1.0.0
 COPY --from=build /app /app
 
 EXPOSE 80
