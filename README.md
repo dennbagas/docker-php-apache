@@ -10,7 +10,7 @@ services:
   cms:
     container_name: cms
     build: .
-    image: dennbagas/docker-php-apache:latest
+    image: dennbagas/docker-php-apache
     ports:
       - "9000:80"
     volumes:
@@ -31,7 +31,7 @@ RUN composer install --optimize-autoloader --no-dev
 
 # Build Image
 # ===================================
-FROM dennbagas/docker-php-apache:latest
+FROM dennbagas/docker-php-apache
 COPY --from=build /app /app
 
 EXPOSE 80
