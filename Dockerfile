@@ -1,20 +1,24 @@
-# Build Image
-# ===================================
 FROM alpine:edge
 
-ADD start.sh /bootstrap/
+# copy entrypoint
+ADD start.sh /app/
+# copy dumnmy data
 COPY /app /app/public
 
-# Add repos
+# Add repository
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    # Install extension
+    # update image first
     && apk update && apk upgrade \
     && apk add --no-cache \
+    # install opensll and php7
     openssl php7 \
-    php7-apache2 apache2 php7-json \
-    php7-openssl php7-mcrypt \
+    # install apache2
+    php7-apache2 apache2 \ 
+    # install php extension
+    php7-json php7-openssl php7-mcrypt \
     php7-mbstring php7-pdo_pgsql \
     php7-tokenizer php7-session \
+    php7-fileinfo php7-curl \
     # tzdata openntpd \
     # copy php and remove cache
     && cp /usr/bin/php7 /usr/bin/php \
@@ -36,7 +40,12 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     # set permission
     && chown -R apache:apache /app \
     && chmod -R 755 /app \
-    && chmod +x /bootstrap/start.sh
+    && chmod +x /app/start.sh
 
+# set workdir to /app
+WORKDIR /app
+
+# expose port 80
 EXPOSE 80
-ENTRYPOINT ["/bootstrap/start.sh"]
+# set entrypoint to start.sh
+ENTRYPOINT ["sh","/app/start.sh"]
