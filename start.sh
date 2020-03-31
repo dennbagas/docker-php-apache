@@ -2,6 +2,10 @@
 
 # PHP Config
 sed -i "s|\;\?\\s\?date.timezone = .*|date.timezone = Asia/Jakarta|" /etc/php7/php.ini
+sed -i "s|\;\?\\s\?memory_limit = .*|memory_limit = 4G|" /etc/php7/php.ini
+sed -i "s|\;\?\\s\?post_max_size = .*|post_max_size = 350M|" /etc/php7/php.ini
+sed -i "s|\;\?\\s\?max_file_uploads = .*|max_file_uploads = 10|" /etc/php7/php.ini
+sed -i "s|\;\?\\s\?upload_max_filesize = .*|upload_max_filesize = 300M|" /etc/php7/php.ini
 
 # check sh source location
 pwd
