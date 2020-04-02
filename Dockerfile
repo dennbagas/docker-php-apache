@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 # copy entrypoint
-ADD start.sh /app/
+ADD entrypoint.sh /app/
 # copy dumnmy data
 COPY /app /app/public
 
@@ -19,7 +19,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     php7-mbstring php7-pdo_pgsql \
     php7-tokenizer php7-session \
     php7-fileinfo php7-curl \
-    # tzdata openntpd \
     # copy php and remove cache
     && cp /usr/bin/php7 /usr/bin/php \
     && rm -f /var/cache/apk/* \
@@ -33,14 +32,10 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     && sed -i "s#^DocumentRoot \".*#DocumentRoot \"/app/public\"#g" /etc/apache2/httpd.conf \
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf \
-    # set php.ini
-    && sed -i "s/\;\?\\s\?max_file_uploads = .*/max_file_uploads = 100M/" /etc/php7/php.ini \
-    && sed -i "s/\;\?\\s\?memory_limit = .*/memory_limit = 128M/" /etc/php7/php.ini \
-    && sed -i "s/\;\?\\s\?post_max_size = .*/post_max_size = 100M/" /etc/php7/php.ini \
     # set permission
     && chown -R apache:apache /app \
     && chmod -R 755 /app \
-    && chmod +x /app/start.sh
+    && chmod +x /app/entrypoint.sh
 
 # set workdir to /app
 WORKDIR /app
@@ -48,4 +43,4 @@ WORKDIR /app
 # expose port 80
 EXPOSE 80
 # set entrypoint to start.sh
-ENTRYPOINT ["sh","/app/start.sh"]
+ENTRYPOINT ["sh","/app/entrypoint.sh"]
