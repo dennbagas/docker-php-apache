@@ -18,7 +18,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     php7-json php7-openssl php7-mcrypt \
     php7-mbstring php7-pdo_pgsql \
     php7-tokenizer php7-session \
-    php7-fileinfo php7-curl \
+    php7-fileinfo php7-curl php7-xml php7-simplexml \
     # copy php and remove cache
     && cp /usr/bin/php7 /usr/bin/php \
     && rm -f /var/cache/apk/* \
