@@ -16,7 +16,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     php7-apache2 apache2 \ 
     # install php extension
     php7-json php7-openssl php7-mcrypt \
-    php7-mbstring php7-pdo_pgsql \
+    php7-mbstring php7-pdo_pgsql php7-gd \
     php7-tokenizer php7-session \
     php7-fileinfo php7-curl php7-xml php7-simplexml \
     # copy php and remove cache
