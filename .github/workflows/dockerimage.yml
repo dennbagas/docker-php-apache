@@ -1,4 +1,4 @@
-name: Build and push docker
+name: Docker Image CI
 
 on:
   push:
@@ -9,11 +9,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Build the Docker image
-    - uses: docker/build-push-action@v1
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1.1.0
       with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
         username: ${{ secrets.DOCKER_USERNAME }}
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
         password: ${{ secrets.DOCKER_PASSWORD }}
+        # Docker repository to tag the image with
         repository: dennbagas/docker-php-apache
+        # Automatically tags the built image with the git reference as per the readme
         tag_with_ref: true
